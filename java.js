@@ -1,5 +1,19 @@
-const gameBoard = [, , , , , , , ,];
+const gameBoard = new Array(9).fill(null);
 
+const playerOne = {
+    name: "",
+    mark: "",
+};
+const playerTwo = {
+    name: "",
+    mark: "",
+
+};
+
+let player1 = "";
+let player2 = "";
+
+//factory function to create the player
 const getPlayer = (pName, marker) => {
     const name = pName;
     const validMarker = ['X', 'O'];
@@ -32,18 +46,62 @@ const numPlayers = (num) => {
 
     }
     else if(num === 1){
+        //To create the player and assign the name and mark
         console.log("Player vs Computer");
-        const player1 = getPlayer("Player 1", "X");
+        const playerOneName = prompt("Enter your name: ");
+        playerOne.name = playerOneName;
+        console.log(playerOneName);
+        const playerOneMark = prompt("Enter your marker (X/O): ");
+        playerOne.mark = playerOneMark;
+        console.log(playerOneMark);
+        const player1 = getPlayer(playerOne.name, playerOne.mark);
+
+        //To create the computer and assign the name and mark
         const computer2 = getPlayer("Computer 2", "O");
         console.log(player1.getStatus(), computer2.getStatus());
     }
     else if(num === 2){
+        //To create the first player and assign the name and mark
         console.log("Player vs Player");
-        const player1 = getPlayer("Player 1", "X");
-        const player2 = getPlayer("Player 2", "O");
+        const playerOneName = prompt("Enter your name: ");
+        playerOne.name = playerOneName;
+        console.log(playerOne.name);
+        const playerOneMark = prompt("Enter your marker (X/O): ");
+        playerOne.mark = playerOneMark;
+        console.log(playerOne.mark);
+
+        player1 = getPlayer(playerOne.name, playerOne.mark);
+
+        //To create the second player and assign the name and mark
+        const playerTwoName = prompt("Enter your name: ");
+        playerTwo.name = playerTwoName;
+        console.log(playerTwo.name);
+
+        if (player1.getMark() === "X"){
+            playerTwo.mark = "O";
+        }
+        else{
+            playerTwo.mark = "X";
+        }
+        console.log(playerTwo.mark);
+        player2 = getPlayer(playerTwo.name, playerTwo.mark);
         console.log(player1.getStatus(), player2.getStatus());
     }
     else{
-        console.log("Invalid number of players");
+        console.log("Invalid number of players")
     }
 }
+
+//To have the user input their position on the gameboard
+const makeMove = (player, position) => {
+    if(gameBoard[position] === null && position >= 0 && position <= 8){
+        gameBoard[position] = player.getMark();
+        console.log(gameBoard);
+    }
+    else{
+        console.log("Invalid move");
+    }
+}
+// To call this command type makeMove(playerOne, 3) in the console.
+
+
