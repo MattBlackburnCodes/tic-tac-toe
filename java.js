@@ -13,6 +13,9 @@ const playerTwo = {
 let player1 = "";
 let player2 = "";
 
+let computer1 = "";
+let computer2 = "";
+
 //factory function to create the player
 const getPlayer = (pName, marker) => {
     const name = pName;
@@ -40,8 +43,8 @@ const numPlayers = (num) => {
     
     if(num === 0){
         console.log("Computer vs Computer");
-        const computer1 = getPlayer("Computer 1", "X");
-        const computer2 = getPlayer("Computer 2", "O");
+        computer1 = getPlayer("Computer 1", "X");
+        computer2 = getPlayer("Computer 2", "O");
         console.log(computer1.getStatus(), computer2.getStatus());
 
     }
@@ -57,7 +60,7 @@ const numPlayers = (num) => {
         const player1 = getPlayer(playerOne.name, playerOne.mark);
 
         //To create the computer and assign the name and mark
-        const computer2 = getPlayer("Computer 2", "O");
+        computer2 = getPlayer("Computer 2", "O");
         console.log(player1.getStatus(), computer2.getStatus());
     }
     else if(num === 2){
