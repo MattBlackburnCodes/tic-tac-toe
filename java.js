@@ -170,7 +170,7 @@ const checkTurn = (player1, player2) => {
         playerTurn = player2;
         player2.setTurn(true);
         player1.setTurn(false);
-        return console.log(`It is ${playerTurn.getName()}'s turn.`)
+        return (`It is ${playerTurn.getName()}'s turn.`)
     }
     else{
         playerTurn = player1;
