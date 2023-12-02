@@ -1,4 +1,4 @@
-const gameBoard = new Array(9).fill(null);
+let gameBoard = new Array(9).fill(null);
 
 let player1 = "";
 let player2 = "";
@@ -8,8 +8,25 @@ let gameOver = false;
 
 let playerOneNameText = document.querySelector(".playerOneName");
 let playerOneMarkText = document.querySelector(".playerOneMarker");
+let playerOneScoreText = document.querySelector(".playerOneScore");
 
 let playerTwoNameText = document.querySelector(".playerTwoName");
+let playerTwoMarkText = document.querySelector(".playerTwoMarker");
+let playerTwoScoreText = document.querySelector(".playerTwoScore");
+
+let displayTurn = document.querySelector(".displayTurn");
+
+gameBoard[0] = document.querySelector(".space0");
+gameBoard[1] = document.querySelector(".space1");
+gameBoard[2] = document.querySelector(".space2");
+gameBoard[3] = document.querySelector(".space3");
+gameBoard[4] = document.querySelector(".space4");
+gameBoard[5] = document.querySelector(".space5");
+gameBoard[6] = document.querySelector(".space6");
+gameBoard[7] = document.querySelector(".space7");
+gameBoard[8] = document.querySelector(".space8");
+
+
 
 
 //factory function to create the player
@@ -83,6 +100,15 @@ const numPlayers = (num) => {
         playerTurn = Math.random() < .5 ? player1 : player2;
         console.log(`${playerTurn.getName()} goes first`);
         playerTurn.setTurn(true);
+        playerOneNameText.textContent = player1.getName();
+        playerOneMarkText.textContent = player1.getMark();
+        playerOneScoreText.textContent = `Score: ${player1.getWins()}`;
+        playerTwoNameText.textContent = player2.getName();
+        playerTwoMarkText.textContent = player2.getMark();
+        playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
+
+        displayTurn.textContent = `It is ${playerTurn.getName()}'s turn.`;
+
 
     }
     else if(num === 1){
@@ -105,6 +131,10 @@ const numPlayers = (num) => {
         }
         playerOneNameText.textContent = player1.getName();
         playerOneMarkText.textContent = player1.getMark();
+        playerOneScoreText.textContent = `Score: ${player1.getWins()}`;
+        playerTwoNameText.textContent = player2.getName();
+        playerTwoMarkText.textContent = player2.getMark();
+        playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
 
         player2 = getPlayer(playerTwoName, playerTwoMark);
         console.log(player1.getStatus(), player2.getStatus());
@@ -112,6 +142,7 @@ const numPlayers = (num) => {
         playerTurn = Math.random() < .5 ? player1 : player2;
         console.log(`${playerTurn.getName()} goes first`);
         playerTurn.setTurn(true);
+        displayTurn.textContent = `It is ${playerTurn.getName()}'s turn.`;
     }
     else if(num === 2){
         console.log("Player vs Player");
@@ -136,10 +167,17 @@ const numPlayers = (num) => {
         console.log(playerTwoMark);
         player2 = getPlayer(playerTwoName, playerTwoMark);
         console.log(player1.getStatus(), player2.getStatus());
+        playerOneNameText.textContent = player1.getName();
+        playerOneMarkText.textContent = player1.getMark();
+        playerOneScoreText.textContent = `Score: ${player1.getWins()}`;
+        playerTwoNameText.textContent = player2.getName();
+        playerTwoMarkText.textContent = player2.getMark();
+        playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
 
         playerTurn = Math.random() < .5 ? player1 : player2;
         console.log(`${playerTurn.getName()} goes first`);
         playerTurn.setTurn(true);
+        displayTurn.textContent = `It is ${playerTurn.getName()}'s turn.`;
     
     }
     else{
