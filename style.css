@@ -1,3 +1,7 @@
+:root{
+    --borderLines: 3px solid grey;
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -5,7 +9,8 @@
     font-family: 'Poppins', sans-serif;
 }
 body{
-    background-color: aqua;
+    background-color: black;
+    color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -41,7 +46,6 @@ body{
     align-items: center;
     height: 20rem;
     width: 20rem;
-    background-color: white;
 }
 
 .upperRows,
@@ -53,12 +57,57 @@ body{
     align-items: center;
     height: 6rem;
     width: 20rem;
-    background-color: white;
+
 }
 
 
+.space0,
+.space1,
+.space2,
+.space3,
+.space4,
+.space5,
+.space6,
+.space7,
+.space8{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 6rem;
+    width: 6rem;
+    font-size: xx-large;
+    cursor: pointer;
+}
+
 .space0{
-    grid-column: 1;
-    grid-row: 1;
-    background-color: red;
+    border-bottom: var(--borderLines);
+    border-right: var(--borderLines);
+}
+.space1{
+    border-bottom: var(--borderLines);
+    border-right: var(--borderLines);
+}
+.space2{
+    border-bottom: var(--borderLines);
+}
+.space3{
+    border-bottom: var(--borderLines);
+    border-right: var(--borderLines);
+}
+.space4{
+    border-bottom: var(--borderLines);
+    border-right: var(--borderLines);
+}
+.space5{
+    border-bottom: var(--borderLines);
+}
+.space6{
+    border-right: var(--borderLines);
+}
+.space7{
+    border-right: var(--borderLines);
+}
+.space8{
+    border: none;
 }

@@ -23,6 +23,7 @@ for (let i = 0; i < 9; i++){
     console.log(domGameBoard[i]);
 }
 
+const resetButton = document.querySelector(".resetButton");
 
 
 
@@ -218,7 +219,9 @@ const makeMove = (position) => {
 
 const checkWinner = (player) => {
     if (gameBoard[0] === gameBoard[1] && gameBoard[1] === gameBoard[2] && gameBoard[0] !== null){
-        
+        domGameBoard[0].style.backgroundColor = "green";
+        domGameBoard[1].style.backgroundColor = "green";
+        domGameBoard[2].style.backgroundColor = "green";
         console.log(`${player.getName()} is the winner`);
         player.setWinner(true);
         player.setWins();
@@ -236,6 +239,9 @@ const checkWinner = (player) => {
         
     }
     else if(gameBoard[3] === gameBoard[4] && gameBoard[4] === gameBoard[5] && gameBoard[3] !== null){
+        domGameBoard[3].style.backgroundColor = "green";
+        domGameBoard[4].style.backgroundColor = "green";
+        domGameBoard[5].style.backgroundColor = "green";
         console.log(`${player.getName()} is the winner`);
         player.setWinner(true);
         player.setWins();
@@ -252,6 +258,9 @@ const checkWinner = (player) => {
         gameOver = true;
     }
     else if(gameBoard[6] === gameBoard[7] && gameBoard[7] === gameBoard[8] && gameBoard[6] !== null){
+        domGameBoard[6].style.backgroundColor = "green";
+        domGameBoard[7].style.backgroundColor = "green";
+        domGameBoard[8].style.backgroundColor = "green";
         console.log(`${player.getName()} is the winner`);
         player.setWinner(true);
         player.setWins();
@@ -270,6 +279,9 @@ const checkWinner = (player) => {
         gameOver = true;
     }
     else if(gameBoard[0] === gameBoard[3] && gameBoard[3] === gameBoard[6] && gameBoard[0] !== null){
+        domGameBoard[0].style.backgroundColor = "green";
+        domGameBoard[3].style.backgroundColor = "green";
+        domGameBoard[6].style.backgroundColor = "green";
         console.log(`${player.getName()} is the winner`);
         player.setWinner(true);
         player.setWins();
@@ -286,6 +298,10 @@ const checkWinner = (player) => {
         gameOver = true;
     }
     else if(gameBoard[1] === gameBoard[4] && gameBoard[4] === gameBoard[7] && gameBoard[1] !== null){
+        domGameBoard[1].style.backgroundColor = "green";
+        domGameBoard[4].style.backgroundColor = "green";
+        domGameBoard[7].style.backgroundColor = "green";
+
         console.log(`${player.getName()} is the winner`);
         player.setWinner(true);
         player.setWins();
@@ -304,6 +320,9 @@ const checkWinner = (player) => {
         gameOver = true;
     }
     else if(gameBoard[2] === gameBoard[5] && gameBoard[5] === gameBoard[8] && gameBoard[2] !== null){
+        domGameBoard[2].style.backgroundColor = "green";
+        domGameBoard[5].style.backgroundColor = "green";
+        domGameBoard[8].style.backgroundColor = "green";
         console.log(`${player.getName()} is the winner`);
         player.setWinner(true);
         player.setWins();
@@ -321,6 +340,10 @@ const checkWinner = (player) => {
         gameOver = true;
     }
     else if(gameBoard[0] === gameBoard[4] && gameBoard[4] === gameBoard[8] && gameBoard[0] !== null){
+        domGameBoard[0].style.backgroundColor = "green";
+        domGameBoard[4].style.backgroundColor = "green";
+        domGameBoard[8].style.backgroundColor = "green";
+
         console.log(`${player.getName()} is the winner`);
         player.setWinner(true);
         player.setWins();
@@ -338,6 +361,9 @@ const checkWinner = (player) => {
         gameOver = true;
     }
     else if(gameBoard[2] === gameBoard[4] && gameBoard[4] === gameBoard[6] && gameBoard[2] !== null){
+        domGameBoard[2].style.backgroundColor = "green";
+        domGameBoard[4].style.backgroundColor = "green";
+        domGameBoard[6].style.backgroundColor = "green";
         console.log(`${player.getName()} is the winner`);
         player.setWinner(true);
         player.setWins();
@@ -376,6 +402,7 @@ const resetGame = () => {
     gameBoard.fill(null);
     for(let i = 0; i < 9; i++){
         domGameBoard[i].textContent = "";
+        domGameBoard[i].style.backgroundColor = "";
     }
     gameOver = false;
     player1.setWinner(false);
@@ -383,10 +410,15 @@ const resetGame = () => {
     player1.setTurn(false);
     player2.setTurn(false);
     playerTurn = "";
+    displayTurn.textContent = "";
     console.log("Game has been reset.");
     playerTurn = Math.random() < .5 ? player1 : player2;
     console.log(`${playerTurn.getName()} goes first`);
+    displayTurn.textContent = `It is ${playerTurn.getName()}'s turn.`;
+
+
 }
+resetButton.addEventListener('click', resetGame);
 
 const checkTurn = (player1, player2) => {
     if(gameOver === true){
@@ -397,12 +429,15 @@ const checkTurn = (player1, player2) => {
         player2.setTurn(true);
         player1.setTurn(false);
         console.log(`It is ${playerTurn.getName()}'s turn.`)
+        displayTurn.textContent = `It is ${playerTurn.getName()}'s turn.`;
+
     }
     else{
         playerTurn = player1;
         player1.setTurn(true);
         player2.setTurn(false);
         console.log(`It is ${playerTurn.getName()}'s turn.`)
+        displayTurn.textContent = `It is ${playerTurn.getName()}'s turn.`;
     }
 }
 
@@ -432,7 +467,29 @@ const computerMove = (player) => {
         computerMove(player2);
     }
 }
+// After defining domGameBoard and resetButton
+domGameBoard.forEach((cell, index) => {
+    cell.addEventListener('click', () => handleCellClick(index));
+});
 
+function handleCellClick(position) {
+    if (gameBoard[position] !== null || gameOver) {
+        return;
+    }
 
+    gameBoard[position] = playerTurn.getMark();
+    domGameBoard[position].textContent = playerTurn.getMark();
 
+    checkWinner(playerTurn);
+    checkDraw();
+    switchTurn();
 
+}
+
+function switchTurn() {
+    playerTurn = (playerTurn === player1) ? player2 : player1;
+}
+
+// Rest of your existing functions (checkWinner, checkDraw, etc.)
+
+// Existing numPlayers and other setup functions
