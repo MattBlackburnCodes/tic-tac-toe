@@ -26,6 +26,7 @@ body{
     align-items: center;
     height: 20vh;
     width: 100vw;
+    gap: 2rem;
 
 }
 .playerOne,
@@ -37,6 +38,7 @@ body{
     align-items: center;
     height: 20vh;
     width: 50vw;
+    text-align: center;
 }
 
 .gameBoard{
@@ -110,4 +112,35 @@ body{
 }
 .space8{
     border: none;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+    width: 100vw;
+    gap: 2rem;
+}
+
+.resetButton,
+.newGameButton{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+    width: 50vw;
+    text-align: center;
+    cursor: pointer;
+}
+
+input[type="button"]{
+    height: 2rem;
+    width: 10rem;
+    font-size: large;
+    text-align: center;
+    margin-bottom: 1rem;
+    border-radius: 5px;
 }

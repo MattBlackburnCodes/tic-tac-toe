@@ -18,11 +18,13 @@ let displayTurn = document.querySelector(".displayTurn");
 
 let domGameBoard = [];
 
+let lastWinner = "";
+
 for (let i = 0; i < 9; i++){
     domGameBoard[i] = document.querySelector(`.space${i}`);
     console.log(domGameBoard[i]);
 }
-
+const newGameButton = document.querySelector(".newGameButton");
 const resetButton = document.querySelector(".resetButton");
 
 
@@ -90,7 +92,13 @@ const getPlayer = (pName, marker) => {
 };
 
 const numPlayers = (num) => {
-    
+    gameOver = false;
+    displayTurn.textContent = "";
+    gameBoard.fill(null);
+    for(let i = 0; i < 9; i++){
+        domGameBoard[i].textContent = "";
+        domGameBoard[i].style.backgroundColor = "";
+    }
     if(num === 0){
         console.log("Computer vs Computer");
         player1 = getPlayer("Computer 1", "X");
@@ -107,6 +115,13 @@ const numPlayers = (num) => {
         playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
 
         displayTurn.textContent = `It is ${playerTurn.getName()}'s turn.`;
+        if (!gameOver) {
+            if (playerTurn === player1 && player1.getName() === "Computer 1") {
+                computerMove(player1);
+            } else if (playerTurn === player2 && player2.getName() === "Computer 2") {
+                computerMove(player2);
+            }
+        }
 
 
     }
@@ -143,6 +158,13 @@ const numPlayers = (num) => {
         playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
         playerTurn.setTurn(true);
         displayTurn.textContent = `It is ${playerTurn.getName()}'s turn.`;
+        if (!gameOver) {
+            if (playerTurn === player1 && player1.getName() === "Computer 1") {
+                computerMove(player1);
+            } else if (playerTurn === player2 && player2.getName() === "Computer 2") {
+                computerMove(player2);
+            }
+        }
     }
     else if(num === 2){
         console.log("Player vs Player");
@@ -185,8 +207,25 @@ const numPlayers = (num) => {
     }
 }
 
+newGameButton.addEventListener('click', () => {
+    domGameBoard.forEach((cell) => {
+        cell.textContent = "";
+        cell.style.backgroundColor = "";
+    });
+    let num = +prompt("How many players? (0, 1, or 2)");
+    numPlayers(num);
+
+    if (!gameOver) {
+        if (playerTurn === player1 && player1.getName() === "Computer 1") {
+            computerMove(player1);
+        } else if (playerTurn === player2 && player2.getName() === "Computer 2") {
+            computerMove(player2);
+        }
+    }
+});
+
 //To have the user input their position on the gameboard
-const makeMove = (position) => {
+/*const makeMove = (position) => {
     if(gameOver === true){
         console.log("Game is over. Please reset the game.");
         return;
@@ -214,7 +253,7 @@ const makeMove = (position) => {
     else{
         console.log("Invalid move");
     }
-}
+}*/
 // To call this command type makeMove(playerOne, 3) in the console.
 
 const checkWinner = (player) => {
@@ -235,6 +274,8 @@ const checkWinner = (player) => {
         playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
         console.log(`${player1.getName()} has ${player1.getWins()} wins, ${player1.getLosses()} losses, and ${player1.getDraws()} draws.`);
         console.log(`${player2.getName()} has ${player2.getWins()} wins, ${player2.getLosses()} losses, and ${player2.getDraws()} draws.`);
+        displayTurn.textContent = `${player.getName()} is the winner`;
+        lastWinner = player;
         gameOver = true;
         
     }
@@ -255,6 +296,8 @@ const checkWinner = (player) => {
         playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
         console.log(`${player1.getName()} has ${player1.getWins()} wins, ${player1.getLosses()} losses, and ${player1.getDraws()} draws.`);
         console.log(`${player2.getName()} has ${player2.getWins()} wins, ${player2.getLosses()} losses, and ${player2.getDraws()} draws.`);
+        displayTurn.textContent = `${player.getName()} is the winner`;
+        lastWinner = player;
         gameOver = true;
     }
     else if(gameBoard[6] === gameBoard[7] && gameBoard[7] === gameBoard[8] && gameBoard[6] !== null){
@@ -276,6 +319,8 @@ const checkWinner = (player) => {
         playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
         console.log(`${player1.getName()} has ${player1.getWins()} wins, ${player1.getLosses()} losses, and ${player1.getDraws()} draws.`);
         console.log(`${player2.getName()} has ${player2.getWins()} wins, ${player2.getLosses()} losses, and ${player2.getDraws()} draws.`);
+        displayTurn.textContent = `${player.getName()} is the winner`;
+        lastWinner = player;
         gameOver = true;
     }
     else if(gameBoard[0] === gameBoard[3] && gameBoard[3] === gameBoard[6] && gameBoard[0] !== null){
@@ -295,6 +340,8 @@ const checkWinner = (player) => {
         }
         console.log(`${player1.getName()} has ${player1.getWins()} wins, ${player1.getLosses()} losses, and ${player1.getDraws()} draws.`);
         console.log(`${player2.getName()} has ${player2.getWins()} wins, ${player2.getLosses()} losses, and ${player2.getDraws()} draws.`);
+        displayTurn.textContent = `${player.getName()} is the winner`;
+        lastWinner = player;
         gameOver = true;
     }
     else if(gameBoard[1] === gameBoard[4] && gameBoard[4] === gameBoard[7] && gameBoard[1] !== null){
@@ -317,6 +364,8 @@ const checkWinner = (player) => {
         playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
         console.log(`${player1.getName()} has ${player1.getWins()} wins, ${player1.getLosses()} losses, and ${player1.getDraws()} draws.`);
         console.log(`${player2.getName()} has ${player2.getWins()} wins, ${player2.getLosses()} losses, and ${player2.getDraws()} draws.`);
+        displayTurn.textContent = `${player.getName()} is the winner`;
+        lastWinner = player;
         gameOver = true;
     }
     else if(gameBoard[2] === gameBoard[5] && gameBoard[5] === gameBoard[8] && gameBoard[2] !== null){
@@ -337,6 +386,8 @@ const checkWinner = (player) => {
         playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
         console.log(`${player1.getName()} has ${player1.getWins()} wins, ${player1.getLosses()} losses, and ${player1.getDraws()} draws.`);
         console.log(`${player2.getName()} has ${player2.getWins()} wins, ${player2.getLosses()} losses, and ${player2.getDraws()} draws.`);
+        displayTurn.textContent = `${player.getName()} is the winner`;
+        lastWinner = player;
         gameOver = true;
     }
     else if(gameBoard[0] === gameBoard[4] && gameBoard[4] === gameBoard[8] && gameBoard[0] !== null){
@@ -358,6 +409,8 @@ const checkWinner = (player) => {
         playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
         console.log(`${player1.getName()} has ${player1.getWins()} wins, ${player1.getLosses()} losses, and ${player1.getDraws()} draws.`);
         console.log(`${player2.getName()} has ${player2.getWins()} wins, ${player2.getLosses()} losses, and ${player2.getDraws()} draws.`);
+        displayTurn.textContent = `${player.getName()} is the winner`;
+        lastWinner = player;
         gameOver = true;
     }
     else if(gameBoard[2] === gameBoard[4] && gameBoard[4] === gameBoard[6] && gameBoard[2] !== null){
@@ -377,6 +430,8 @@ const checkWinner = (player) => {
         playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
         console.log(`${player1.getName()} has ${player1.getWins()} wins, ${player1.getLosses()} losses, and ${player1.getDraws()} draws.`);
         console.log(`${player2.getName()} has ${player2.getWins()} wins, ${player2.getLosses()} losses, and ${player2.getDraws()} draws.`);
+        displayTurn.textContent = `${player.getName()} is the winner`;
+        lastWinner = player;
         gameOver = true;
     } 
 }
@@ -395,6 +450,7 @@ const checkDraw = () => {
         player2.setDraws();
         console.log(`${player1.getName()} has ${player1.getWins()} wins, ${player1.getLosses()} losses, and ${player1.getDraws()} draws.`);
         console.log(`${player2.getName()} has ${player2.getWins()} wins, ${player2.getLosses()} losses, and ${player2.getDraws()} draws.`);
+        displayTurn.textContent = `Draw`;
         gameOver = true;
     }
 }
@@ -409,12 +465,27 @@ const resetGame = () => {
     player2.setWinner(false);
     player1.setTurn(false);
     player2.setTurn(false);
-    playerTurn = "";
-    displayTurn.textContent = "";
+    if (lastWinner === player1){
+        playerTurn = player2;
+    }
+    else{
+        playerTurn = player1;
+    }
+    displayTurn.textContent = `It is ${playerTurn.getName()}'s turn.`;
+    //playerTurn = "";
+    //displayTurn.textContent = "";
     console.log("Game has been reset.");
-    playerTurn = Math.random() < .5 ? player1 : player2;
+    //playerTurn = Math.random() < .5 ? player1 : player2;
     console.log(`${playerTurn.getName()} goes first`);
     displayTurn.textContent = `It is ${playerTurn.getName()}'s turn.`;
+    
+    if (!gameOver) {
+        if (playerTurn === player1 && player1.getName() === "Computer 1") {
+            computerMove(player1);
+        } else if (playerTurn === player2 && player2.getName() === "Computer 2") {
+            computerMove(player2);
+        }
+    }
 
 
 }
@@ -477,18 +548,34 @@ function handleCellClick(position) {
         return;
     }
 
+    makeMove(position); // Make the current player's move
+
+    // Check if the next turn is for the computer and if the game is still ongoing
+    if (!gameOver) {
+        if (playerTurn === player1 && player1.getName() === "Computer 1") {
+            computerMove(player1);
+        } else if (playerTurn === player2 && player2.getName() === "Computer 2") {
+            computerMove(player2);
+        }
+    }
+}
+
+function makeMove(position) {
     gameBoard[position] = playerTurn.getMark();
     domGameBoard[position].textContent = playerTurn.getMark();
 
     checkWinner(playerTurn);
     checkDraw();
-    switchTurn();
-
+    if (!gameOver) {
+        switchTurn(); // Switch turn only if the game is not over
+    }
 }
 
 function switchTurn() {
     playerTurn = (playerTurn === player1) ? player2 : player1;
+    displayTurn.textContent = `It is ${playerTurn.getName()}'s turn.`;
 }
+
 
 // Rest of your existing functions (checkWinner, checkDraw, etc.)
 
