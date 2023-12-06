@@ -26,6 +26,11 @@ for (let i = 0; i < 9; i++){
 }
 const newGameButton = document.querySelector(".newGameButton");
 const resetButton = document.querySelector(".resetButton");
+playerOneMarkText.style.color = "lightblue";
+playerTwoMarkText.style.color = "red";
+
+playerOneMark = "blue";
+playerTwoMark = "red";
 
 
 
@@ -91,21 +96,21 @@ const getPlayer = (pName, marker) => {
     return {getName, getMark, getStatus, getTurn, setTurn, getWinner, setWinner, setWins, setLosses, setDraws, getWins, getLosses, getDraws};
 };
 
+//function to create the players
 const numPlayers = (num) => {
     gameOver = false;
     displayTurn.textContent = "";
     gameBoard.fill(null);
+
     for(let i = 0; i < 9; i++){
         domGameBoard[i].textContent = "";
         domGameBoard[i].style.backgroundColor = "";
     }
+    //Computer vs Computer
     if(num === 0){
-        console.log("Computer vs Computer");
         player1 = getPlayer("Computer 1", "X");
         player2 = getPlayer("Computer 2", "O");
-        console.log(player1.getStatus(), player2.getStatus());
         playerTurn = Math.random() < .5 ? player1 : player2;
-        console.log(`${playerTurn.getName()} goes first`);
         playerTurn.setTurn(true);
         playerOneNameText.textContent = player1.getName();
         playerOneMarkText.textContent = player1.getMark();
@@ -127,13 +132,8 @@ const numPlayers = (num) => {
     }
     else if(num === 1){
         //To create the player and assign the name and mark
-        console.log("Player vs Computer");
         const playerOneName = prompt("Enter your name: ");
-        console.log(playerOneName);
-        
         const playerOneMark = prompt("Enter your marker (X/O): ");
-        console.log(playerOneMark);
-        
         player1 = getPlayer(playerOneName, playerOneMark);
         let playerTwoMark = '';
         let playerTwoName = `Computer 2`;
@@ -167,16 +167,12 @@ const numPlayers = (num) => {
         }
     }
     else if(num === 2){
-        console.log("Player vs Player");
         const playerOneName = prompt("Enter your name: ");
-        console.log(playerOneName);
         const playerOneMark = prompt("Enter your marker (X/O): ");
-        console.log(playerOneMark);
         player1 = getPlayer(playerOneName, playerOneMark);
 
         //To create the second player and assign the name and mark
         const playerTwoName = prompt("Enter your name: ");
-        console.log(playerTwoName);
 
         let playerTwoMark = '';
 
@@ -186,9 +182,7 @@ const numPlayers = (num) => {
         else{
             playerTwoMark = "X";
         }
-        console.log(playerTwoMark);
         player2 = getPlayer(playerTwoName, playerTwoMark);
-        console.log(player1.getStatus(), player2.getStatus());
         playerOneNameText.textContent = player1.getName();
         playerOneMarkText.textContent = player1.getMark();
         playerOneScoreText.textContent = `Score: ${player1.getWins()}`;
@@ -197,7 +191,6 @@ const numPlayers = (num) => {
         playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
 
         playerTurn = Math.random() < .5 ? player1 : player2;
-        console.log(`${playerTurn.getName()} goes first`);
         playerTurn.setTurn(true);
         displayTurn.textContent = `It is ${playerTurn.getName()}'s turn.`;
     
@@ -224,44 +217,11 @@ newGameButton.addEventListener('click', () => {
     }
 });
 
-//To have the user input their position on the gameboard
-/*const makeMove = (position) => {
-    if(gameOver === true){
-        console.log("Game is over. Please reset the game.");
-        return;
-    }
-
-    if(gameBoard[position] === null && position >= 0 && position <= 8){
-        //Putting the move on the gameboard
-        gameBoard[position] = playerTurn.getMark();
-        domGameBoard[position].textContent = playerTurn.getMark();
-        console.log(gameBoard);
-        checkWinner(playerTurn);
-        checkDraw();
-
-            
-        //playerTurn = player;
-        checkTurn(player1, player2);
-        if(playerTurn.getName() === "Computer 1" && playerTurn.getTurn() === true){
-            computerMove(player1);
-        }
-        else if(playerTurn.getName() === "Computer 2" && playerTurn.getTurn() === true){
-            computerMove(player2);
-        }
-
-    }
-    else{
-        console.log("Invalid move");
-    }
-}*/
-// To call this command type makeMove(playerOne, 3) in the console.
-
 const checkWinner = (player) => {
     if (gameBoard[0] === gameBoard[1] && gameBoard[1] === gameBoard[2] && gameBoard[0] !== null){
         domGameBoard[0].style.backgroundColor = "green";
         domGameBoard[1].style.backgroundColor = "green";
         domGameBoard[2].style.backgroundColor = "green";
-        console.log(`${player.getName()} is the winner`);
         player.setWinner(true);
         player.setWins();
         if(player === player1){
@@ -272,8 +232,6 @@ const checkWinner = (player) => {
         }
         playerOneScoreText.textContent = `Score: ${player1.getWins()}`;
         playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
-        console.log(`${player1.getName()} has ${player1.getWins()} wins, ${player1.getLosses()} losses, and ${player1.getDraws()} draws.`);
-        console.log(`${player2.getName()} has ${player2.getWins()} wins, ${player2.getLosses()} losses, and ${player2.getDraws()} draws.`);
         displayTurn.textContent = `${player.getName()} is the winner`;
         lastWinner = player;
         gameOver = true;
@@ -283,7 +241,6 @@ const checkWinner = (player) => {
         domGameBoard[3].style.backgroundColor = "green";
         domGameBoard[4].style.backgroundColor = "green";
         domGameBoard[5].style.backgroundColor = "green";
-        console.log(`${player.getName()} is the winner`);
         player.setWinner(true);
         player.setWins();
         if(player === player1){
@@ -294,8 +251,6 @@ const checkWinner = (player) => {
         }
         playerOneScoreText.textContent = `Score: ${player1.getWins()}`;
         playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
-        console.log(`${player1.getName()} has ${player1.getWins()} wins, ${player1.getLosses()} losses, and ${player1.getDraws()} draws.`);
-        console.log(`${player2.getName()} has ${player2.getWins()} wins, ${player2.getLosses()} losses, and ${player2.getDraws()} draws.`);
         displayTurn.textContent = `${player.getName()} is the winner`;
         lastWinner = player;
         gameOver = true;
@@ -307,8 +262,6 @@ const checkWinner = (player) => {
         console.log(`${player.getName()} is the winner`);
         player.setWinner(true);
         player.setWins();
-        playerOneScoreText.textContent = `Score: ${player1.getWins()}`;
-        playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
         if(player === player1){
             player2.setLosses();
         }
@@ -317,8 +270,6 @@ const checkWinner = (player) => {
         }
         playerOneScoreText.textContent = `Score: ${player1.getWins()}`;
         playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
-        console.log(`${player1.getName()} has ${player1.getWins()} wins, ${player1.getLosses()} losses, and ${player1.getDraws()} draws.`);
-        console.log(`${player2.getName()} has ${player2.getWins()} wins, ${player2.getLosses()} losses, and ${player2.getDraws()} draws.`);
         displayTurn.textContent = `${player.getName()} is the winner`;
         lastWinner = player;
         gameOver = true;
@@ -327,19 +278,17 @@ const checkWinner = (player) => {
         domGameBoard[0].style.backgroundColor = "green";
         domGameBoard[3].style.backgroundColor = "green";
         domGameBoard[6].style.backgroundColor = "green";
-        console.log(`${player.getName()} is the winner`);
         player.setWinner(true);
         player.setWins();
-        playerOneScoreText.textContent = `Score: ${player1.getWins()}`;
-        playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
+
         if(player === player1){
             player2.setLosses();
         }
         else{
             player1.setLosses();
         }
-        console.log(`${player1.getName()} has ${player1.getWins()} wins, ${player1.getLosses()} losses, and ${player1.getDraws()} draws.`);
-        console.log(`${player2.getName()} has ${player2.getWins()} wins, ${player2.getLosses()} losses, and ${player2.getDraws()} draws.`);
+        playerOneScoreText.textContent = `Score: ${player1.getWins()}`;
+        playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
         displayTurn.textContent = `${player.getName()} is the winner`;
         lastWinner = player;
         gameOver = true;
@@ -348,12 +297,8 @@ const checkWinner = (player) => {
         domGameBoard[1].style.backgroundColor = "green";
         domGameBoard[4].style.backgroundColor = "green";
         domGameBoard[7].style.backgroundColor = "green";
-
-        console.log(`${player.getName()} is the winner`);
         player.setWinner(true);
         player.setWins();
-        playerOneScoreText.textContent = `Score: ${player1.getWins()}`;
-        playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
         if(player === player1){
             player2.setLosses();
         }
@@ -362,8 +307,6 @@ const checkWinner = (player) => {
         }
         playerOneScoreText.textContent = `Score: ${player1.getWins()}`;
         playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
-        console.log(`${player1.getName()} has ${player1.getWins()} wins, ${player1.getLosses()} losses, and ${player1.getDraws()} draws.`);
-        console.log(`${player2.getName()} has ${player2.getWins()} wins, ${player2.getLosses()} losses, and ${player2.getDraws()} draws.`);
         displayTurn.textContent = `${player.getName()} is the winner`;
         lastWinner = player;
         gameOver = true;
@@ -372,7 +315,6 @@ const checkWinner = (player) => {
         domGameBoard[2].style.backgroundColor = "green";
         domGameBoard[5].style.backgroundColor = "green";
         domGameBoard[8].style.backgroundColor = "green";
-        console.log(`${player.getName()} is the winner`);
         player.setWinner(true);
         player.setWins();
         
@@ -384,8 +326,6 @@ const checkWinner = (player) => {
         }
         playerOneScoreText.textContent = `Score: ${player1.getWins()}`;
         playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
-        console.log(`${player1.getName()} has ${player1.getWins()} wins, ${player1.getLosses()} losses, and ${player1.getDraws()} draws.`);
-        console.log(`${player2.getName()} has ${player2.getWins()} wins, ${player2.getLosses()} losses, and ${player2.getDraws()} draws.`);
         displayTurn.textContent = `${player.getName()} is the winner`;
         lastWinner = player;
         gameOver = true;
@@ -394,8 +334,6 @@ const checkWinner = (player) => {
         domGameBoard[0].style.backgroundColor = "green";
         domGameBoard[4].style.backgroundColor = "green";
         domGameBoard[8].style.backgroundColor = "green";
-
-        console.log(`${player.getName()} is the winner`);
         player.setWinner(true);
         player.setWins();
         
@@ -407,8 +345,6 @@ const checkWinner = (player) => {
         }
         playerOneScoreText.textContent = `Score: ${player1.getWins()}`;
         playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
-        console.log(`${player1.getName()} has ${player1.getWins()} wins, ${player1.getLosses()} losses, and ${player1.getDraws()} draws.`);
-        console.log(`${player2.getName()} has ${player2.getWins()} wins, ${player2.getLosses()} losses, and ${player2.getDraws()} draws.`);
         displayTurn.textContent = `${player.getName()} is the winner`;
         lastWinner = player;
         gameOver = true;
@@ -417,7 +353,6 @@ const checkWinner = (player) => {
         domGameBoard[2].style.backgroundColor = "green";
         domGameBoard[4].style.backgroundColor = "green";
         domGameBoard[6].style.backgroundColor = "green";
-        console.log(`${player.getName()} is the winner`);
         player.setWinner(true);
         player.setWins();
         if(player === player1){
@@ -428,8 +363,6 @@ const checkWinner = (player) => {
         }
         playerOneScoreText.textContent = `Score: ${player1.getWins()}`;
         playerTwoScoreText.textContent = `Score: ${player2.getWins()}`;
-        console.log(`${player1.getName()} has ${player1.getWins()} wins, ${player1.getLosses()} losses, and ${player1.getDraws()} draws.`);
-        console.log(`${player2.getName()} has ${player2.getWins()} wins, ${player2.getLosses()} losses, and ${player2.getDraws()} draws.`);
         displayTurn.textContent = `${player.getName()} is the winner`;
         lastWinner = player;
         gameOver = true;
@@ -448,10 +381,9 @@ const checkDraw = () => {
         console.log("Draw");
         player1.setDraws();
         player2.setDraws();
-        console.log(`${player1.getName()} has ${player1.getWins()} wins, ${player1.getLosses()} losses, and ${player1.getDraws()} draws.`);
-        console.log(`${player2.getName()} has ${player2.getWins()} wins, ${player2.getLosses()} losses, and ${player2.getDraws()} draws.`);
         displayTurn.textContent = `Draw`;
         gameOver = true;
+        lastWinner = "";
     }
 }
 const resetGame = () => {
@@ -468,15 +400,16 @@ const resetGame = () => {
     if (lastWinner === player1){
         playerTurn = player2;
     }
-    else{
+    else if (lastWinner === player2){
         playerTurn = player1;
+    }
+    else{
+        playerTurn = Math.random() < .5 ? player1 : player2;
     }
     displayTurn.textContent = `It is ${playerTurn.getName()}'s turn.`;
     //playerTurn = "";
     //displayTurn.textContent = "";
-    console.log("Game has been reset.");
     //playerTurn = Math.random() < .5 ? player1 : player2;
-    console.log(`${playerTurn.getName()} goes first`);
     displayTurn.textContent = `It is ${playerTurn.getName()}'s turn.`;
     
     if (!gameOver) {
@@ -486,8 +419,6 @@ const resetGame = () => {
             computerMove(player2);
         }
     }
-
-
 }
 resetButton.addEventListener('click', resetGame);
 
@@ -499,7 +430,6 @@ const checkTurn = (player1, player2) => {
         playerTurn = player2;
         player2.setTurn(true);
         player1.setTurn(false);
-        console.log(`It is ${playerTurn.getName()}'s turn.`)
         displayTurn.textContent = `It is ${playerTurn.getName()}'s turn.`;
 
     }
@@ -507,14 +437,13 @@ const checkTurn = (player1, player2) => {
         playerTurn = player1;
         player1.setTurn(true);
         player2.setTurn(false);
-        console.log(`It is ${playerTurn.getName()}'s turn.`)
         displayTurn.textContent = `It is ${playerTurn.getName()}'s turn.`;
     }
 }
 
 const computerMove = (player) => {
+    
     if(gameOver === true){
-        console.log("Game is over. Please reset the game.");
         return;
     }
     let position = Math.floor(Math.random() * 9);
@@ -523,14 +452,19 @@ const computerMove = (player) => {
         position = Math.floor(Math.random() * 9);
     }
     //Putting the move on the gameboard
+    if(playerTurn === player1 && player1.getName() === "Computer 1"){
+        domGameBoard[position].style.color = "lightblue";
+    }
+    else{
+        domGameBoard[position].style.color = "red";
+    }
     gameBoard[position] = player.getMark();
     domGameBoard[position].textContent = player.getMark();
-    console.log(gameBoard);
-    console.log(`${player.getName()} chose position ${position}`);
     checkWinner(player);
     checkDraw();
     playerTurn = player;
     checkTurn(player1, player2);
+    
     if(playerTurn.getName() === "Computer 1" && playerTurn.getTurn() === true){
         computerMove(player1);
     }
@@ -564,6 +498,13 @@ function makeMove(position) {
     gameBoard[position] = playerTurn.getMark();
     domGameBoard[position].textContent = playerTurn.getMark();
 
+    if(playerTurn === player1){
+        domGameBoard[position].style.color = "lightblue";
+    }
+    else{
+        domGameBoard[position].style.color = "red";
+    }
+
     checkWinner(playerTurn);
     checkDraw();
     if (!gameOver) {
@@ -575,8 +516,3 @@ function switchTurn() {
     playerTurn = (playerTurn === player1) ? player2 : player1;
     displayTurn.textContent = `It is ${playerTurn.getName()}'s turn.`;
 }
-
-
-// Rest of your existing functions (checkWinner, checkDraw, etc.)
-
-// Existing numPlayers and other setup functions

@@ -62,7 +62,6 @@ body{
 
 }
 
-
 .space0,
 .space1,
 .space2,
@@ -78,7 +77,7 @@ body{
     align-items: center;
     height: 6rem;
     width: 6rem;
-    font-size: xx-large;
+    font-size: 6rem;
     cursor: pointer;
 }
 
